@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 238509804}
   - component: {fileID: 238509803}
   m_Layer: 0
-  m_Name: HummingBird
+  m_Name: Shrimp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,7 +194,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 108f2acccde100b4392055f23e418efa, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 28d5f15c6bed95a4caed2732d2c4e417, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -214,7 +214,7 @@ Transform:
   m_GameObject: {fileID: 238509802}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.83, y: 0, z: -1}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
