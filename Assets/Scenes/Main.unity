@@ -238,9 +238,9 @@ MonoBehaviour:
   health: 60
   transformTime: 3
   transformWork: 100
-  birdWalkingSpeed: 0
-  birdFlyingSpeed: 0
-  birdFallingSpeed: 0
+  birdWalkingSpeed: 6
+  birdFlyingSpeed: 6
+  birdFallingSpeed: 3
   cowWalkingSpeed: 6
   cowFallingSpeed: 9
   cowDashDistance: 6
@@ -254,7 +254,7 @@ Rigidbody2D:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 238509802}
   m_BodyType: 0
-  m_Simulated: 0
+  m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
