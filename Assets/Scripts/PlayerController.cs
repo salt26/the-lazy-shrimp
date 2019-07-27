@@ -99,8 +99,8 @@ public class PlayerController : MonoBehaviour
             if (state == State.HummingBird) currentTransformLazy = 0f;
             if (state == State.BlackCow)
             {
-                currentTransformWork += 5f * Time.fixedDeltaTime;
-                if (IsDashing) currentTransformWork += 20f / cowDashTime * Time.fixedDeltaTime;                 // 대시 시 게으름 게이지 2배로 감소
+                if (!IsDashing) currentTransformWork += 5f * Time.fixedDeltaTime;
+                else currentTransformWork += 20f / cowDashTime * Time.fixedDeltaTime;                 // 대시 시 게으름 게이지 2배로 감소
             }
         }
         Debug.Log("LazyWork = " + LazyWork);
