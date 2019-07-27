@@ -68,6 +68,13 @@ public class PlayerController : MonoBehaviour
     void Awake()
     {
         // 기본값은 새
+        currentTransformWork = 0f;
+        currentTransformLazy = 0f;
+        state = State.HummingBird;
+        blackCow.SetActive(false);
+        hummingBird.SetActive(true);
+        maxHealth = birdMaxHealth;
+        health = Mathf.Clamp(health, 0f, maxHealth);
         animator = hummingBird.GetComponent<Animator>();
     }
 
@@ -80,7 +87,8 @@ public class PlayerController : MonoBehaviour
         bool isWorking; // 일하는 중인지, 즉 키보드 입력을 받고 있거나 대시 중인지
 
         #region 변신
-        if (!(state == State.BlackCow && IsDashing) && Mathf.Approximately(moveHorizontal, 0f) && (state == State.BlackCow || Mathf.Approximately(moveVertical, 0f)))
+        if (!(state == State.BlackCow && IsDashing) && Mathf.Approximately(moveHorizontal, 0f) &&
+            (state == State.BlackCow || Mathf.Approximately(moveVertical, 0f)))
         {
             isWorking = false;
             if (state == State.HummingBird) currentTransformLazy += Time.fixedDeltaTime;
@@ -91,8 +99,8 @@ public class PlayerController : MonoBehaviour
             if (state == State.HummingBird) currentTransformLazy = 0f;
             if (state == State.BlackCow)
             {
-                currentTransformWork += Time.fixedDeltaTime;
-                if (IsDashing) currentTransformWork += Time.fixedDeltaTime;
+                if (!IsDashing) currentTransformWork += 5f * Time.fixedDeltaTime;
+                else currentTransformWork += 20f / cowDashTime * Time.fixedDeltaTime;                 // 대시 시 게으름 게이지 2배로 감소
             }
         }
         Debug.Log("LazyWork = " + LazyWork);
@@ -129,6 +137,7 @@ public class PlayerController : MonoBehaviour
             health -= Time.fixedDeltaTime;
             movement.x = moveHorizontal * birdWalkingSpeed;
             movement.y = moveVertical * birdFlyingSpeed -  birdFallingSpeed;
+            if (movement.y > 0f) health -= Time.fixedDeltaTime;      // 상승 시 1.5배로 체력 감소
         }
         else
         {
@@ -138,7 +147,7 @@ public class PlayerController : MonoBehaviour
                 // 대시 중
                 currentDashTime += Time.fixedDeltaTime;
                 movement.x = currentDashDirection * (2 * cowDashDistance / cowDashTime) * (1 - currentDashTime / cowDashTime);
-                movement.y = isGrounded ? 0f : -cowFallingSpeed;
+                movement.y = 0f;
             }
             else
             {
