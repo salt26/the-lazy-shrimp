@@ -187,11 +187,11 @@ public class PlayerController : MonoBehaviour
         #region 바닥에 닿았는지 감지
         Vector2 ray = new Vector2(0f, -1f);
         float height = (state == State.HummingBird) ? birdHeight : cowHeight;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), ray, height);        // 0.01만 올라가도 안 닿음
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), ray, height, ~(1 << 8 | 1 << 9));        // 0.01만 올라가도 안 닿음
         if (hit)
         {
             isGrounded = true;
-            //Debug.Log(hit.collider.name);
+            Debug.Log(hit.collider.name);
         }
         else
         {
