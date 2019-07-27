@@ -11,7 +11,7 @@ public class StrawberryTree : MonoBehaviour
     {
         if (m_Strawberry == null && currentTime > genTime)
         {
-            m_Strawberry = Instantiate(strawberry, GetComponent<Transform>().position + new Vector3(Random.Range(-0.8f, 0.8f), -0.1f, -0.5f), Quaternion.identity).GetComponent<Strawberry>();
+            m_Strawberry = Instantiate(strawberry, GetComponent<Transform>().position + new Vector3(Random.Range(-0.8f, 0.8f), -0.1f, 0f), Quaternion.identity).GetComponent<Strawberry>();
             currentTime = 0f;
         }
         if (m_Strawberry == null)
