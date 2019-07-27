@@ -195,12 +195,12 @@ public class PlayerController : MonoBehaviour
             if (moveHorizontal > 0f)
             {
                 hummingBird.GetComponent<SpriteRenderer>().flipX = false;
-                blackCow.GetComponent<SpriteRenderer>().flipX = true;
+                blackCow.GetComponent<SpriteRenderer>().flipX = false;
             }
             else
             {
                 hummingBird.GetComponent<SpriteRenderer>().flipX = true;
-                blackCow.GetComponent<SpriteRenderer>().flipX = false;
+                blackCow.GetComponent<SpriteRenderer>().flipX = true;
             }
         }
         if (state == State.HummingBird) {
