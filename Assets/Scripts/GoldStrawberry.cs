@@ -6,17 +6,32 @@ public class GoldStrawberry : MonoBehaviour
 {
     public GameObject destroyed;
     public GameObject youWin;
+    private bool isTriggered = false;
+    private float waitTime = 0.7f, currentWaitTime = 0f;
+
+    void Update()
+    {
+        if (isTriggered)
+        {
+            if (currentWaitTime > waitTime)
+            {
+                GameManager.gm.NextLevel();
+                Destroy(this.gameObject);
+            }
+            currentWaitTime += Time.deltaTime;
+        }
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && other.gameObject.GetComponentInParent<PlayerController>().health > 0f)
+        if (other.tag == "Player" && other.gameObject.GetComponentInParent<PlayerController>().health > 0f && !isTriggered)
         {
+            isTriggered = true;
             other.gameObject.GetComponentInParent<PlayerController>().AddHealth(3000f);   // 체력 3000 회복
             Instantiate(destroyed, GetComponent<Transform>().position, GetComponent<Transform>().rotation);
-            GameManager.gm.NextLevel();
             youWin.SetActive(true);
             youWin.GetComponent<Animator>().SetTrigger("Win");
-            Destroy(this.gameObject);
+            GetComponent<SpriteRenderer>().enabled = false;
         }
     }
 }
