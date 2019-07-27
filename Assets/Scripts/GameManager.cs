@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -47,6 +48,7 @@ public class GameManager : MonoBehaviour
                 {
                     case CursorState.Start:
                     //Todo
+                    SceneManager.LoadScene(1);
                     break;
 
                     case CursorState.Exit:
