@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 6879174663851639257}
   - component: {fileID: 6879174663851639262}
   - component: {fileID: 6879174663851639237}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: HummingBird
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -230,7 +230,7 @@ GameObject:
   - component: {fileID: 6879174663854232451}
   - component: {fileID: 6879174663854232448}
   - component: {fileID: 6879174663854232449}
-  m_Layer: 2
+  m_Layer: 8
   m_Name: BlackCow
   m_TagString: Player
   m_Icon: {fileID: 0}
