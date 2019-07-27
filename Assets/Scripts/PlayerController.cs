@@ -187,7 +187,7 @@ public class PlayerController : MonoBehaviour
         #region 바닥에 닿았는지 감지
         Vector2 ray = new Vector2(0f, -1f);
         float height = (state == State.HummingBird) ? birdHeight : cowHeight;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), ray, height, ~(1 << 8 | 1 << 9));        // 0.01만 올라가도 안 닿음
+        RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), ray, height, 1 << 11);        // 0.01만 올라가도 안 닿음
         if (hit)
         {
             isGrounded = true;
@@ -198,10 +198,10 @@ public class PlayerController : MonoBehaviour
             isGrounded = false;
         }
 
-        RaycastHit2D hitBelow = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(0f, -1f), Mathf.Infinity, ~(1 << 8 | 1 << 9));
-        RaycastHit2D hitAbove = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(0f, 1f), Mathf.Infinity, ~(1 << 8 | 1 << 9));
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(-1f, 0f), Mathf.Infinity, ~(1 << 8 | 1 << 9));
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(1f, 0f), Mathf.Infinity, ~(1 << 8 | 1 << 9));
+        RaycastHit2D hitBelow = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(0f, -1f), Mathf.Infinity, 1 << 11);
+        RaycastHit2D hitAbove = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(0f, 1f), Mathf.Infinity, 1 << 11);
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(-1f, 0f), Mathf.Infinity, 1 << 11);
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(1f, 0f), Mathf.Infinity, 1 << 11);
         if (hitBelow && hitAbove && hitLeft && hitRight)
         {
             float upDown = hitBelow.distance + hitAbove.distance;
