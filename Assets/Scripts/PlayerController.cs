@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         if (hit)
         {
             isGrounded = true;
-            Debug.Log(hit.collider.name);
+            //Debug.Log(hit.collider.name);
         }
         else
         {
