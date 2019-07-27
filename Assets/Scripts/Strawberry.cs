@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Strawberry : MonoBehaviour
 {
+    public GameObject destroyed;
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.tag == "Player")
         {
             other.gameObject.GetComponentInParent<PlayerController>().AddHealth(60f);   // 체력 60 회복
+            Instantiate(destroyed, GetComponent<Transform>().position, GetComponent<Transform>().rotation);
             Destroy(this.gameObject);
-            // TODO 사라지는 애니메이션
         }
     }
 }
