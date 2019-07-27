@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,9 +9,13 @@ public class PlayerController : MonoBehaviour
     {
         HummingBird, BlackCow
     }
-
+    
     public State state;         // 지금이 새냐 소냐
     public float health;        // 현재 체력
+    public RectTransform UIBirdHealth, UIBirdLine, UICowHealth; //UI용
+    public GameObject UILazyWorkGauge;            //UI용
+    public Text UIHealthText, UIHealthText2;        //UI용
+    public float UIMaxWidth;                      //UI용, 체력바의 최대 길이
     [SerializeField]
     private float transformLazy, transformWork;                 // 이만큼 가만히 있으면 소로 변함, 이만큼 게이지가 차면 새로 변함
     private float currentTransformLazy, currentTransformWork;   // 현재 가만히 있는 게이지, 현재 일 게이지
@@ -76,6 +81,14 @@ public class PlayerController : MonoBehaviour
         maxHealth = birdMaxHealth;
         health = Mathf.Clamp(health, 0f, maxHealth);
         animator = hummingBird.GetComponent<Animator>();
+
+        // UI 기본값
+        UIBirdHealth.sizeDelta = new Vector2(UIMaxWidth, UIBirdHealth.sizeDelta.y);
+        UIBirdLine.sizeDelta = new Vector2(UIMaxWidth, UIBirdLine.sizeDelta.y);
+        UICowHealth.sizeDelta = new Vector2(0.0f, UICowHealth.sizeDelta.y);
+        UILazyWorkGauge.GetComponent<Image>().color = new Color(204.0f / 255.0f, 204.0f / 255.0f, 51.0f / 255.0f);
+        UILazyWorkGauge.GetComponent<RectTransform>().sizeDelta = new Vector2(0.0f, UILazyWorkGauge.GetComponent<RectTransform>().sizeDelta.y);
+        UIHealthText.text = UIHealthText2.text = (int)health + "/" + (int)birdMaxHealth;
     }
 
     void FixedUpdate()
@@ -224,6 +237,27 @@ public class PlayerController : MonoBehaviour
         {
             isDead = true;
             // TODO 죽는 애니메이션
+        }
+        #endregion
+
+        #region UI
+        if(state == State.HummingBird)
+        {
+            UIBirdHealth.sizeDelta = new Vector2(UIMaxWidth * health / birdMaxHealth, UIBirdHealth.sizeDelta.y);
+            UIBirdLine.sizeDelta = new Vector2(UIMaxWidth, UIBirdLine.sizeDelta.y);
+            UICowHealth.sizeDelta = new Vector2(0.0f, UICowHealth.sizeDelta.y);
+            UILazyWorkGauge.GetComponent<Image>().color = new Color(204.0f / 255.0f, 204.0f / 255.0f, 51.0f / 255.0f);
+            UILazyWorkGauge.GetComponent<RectTransform>().sizeDelta = new Vector2(UIMaxWidth * LazyWork / 100.0f, UILazyWorkGauge.GetComponent<RectTransform>().sizeDelta.y);
+            UIHealthText.text = UIHealthText2.text = (int)health + "/" + (int)birdMaxHealth;
+        }
+        else if(state == State.BlackCow)
+        {
+            UIBirdHealth.sizeDelta = new Vector2(0.0f, UIBirdHealth.sizeDelta.y);
+            UIBirdLine.sizeDelta = new Vector2(0.0f, UIBirdLine.sizeDelta.y);
+            UICowHealth.sizeDelta = new Vector2(UIMaxWidth * health / cowMaxHealth, UICowHealth.sizeDelta.y);
+            UILazyWorkGauge.GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f);
+            UILazyWorkGauge.GetComponent<RectTransform>().sizeDelta = new Vector2(UIMaxWidth * LazyWork / 100.0f, UILazyWorkGauge.GetComponent<RectTransform>().sizeDelta.y);
+            UIHealthText.text = UIHealthText2.text = (int)health + "/" + (int)cowMaxHealth;
         }
         #endregion
     }
