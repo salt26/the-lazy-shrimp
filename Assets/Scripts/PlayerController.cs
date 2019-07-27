@@ -137,7 +137,7 @@ public class PlayerController : MonoBehaviour
             health -= Time.fixedDeltaTime;
             movement.x = moveHorizontal * birdWalkingSpeed;
             movement.y = moveVertical * birdFlyingSpeed -  birdFallingSpeed;
-            if (movement.y > 0f) health -= 0.5f * Time.fixedDeltaTime;      // 상승 시 1.5배로 체력 감소
+            if (movement.y > 0f) health -= Time.fixedDeltaTime;      // 상승 시 1.5배로 체력 감소
         }
         else
         {
