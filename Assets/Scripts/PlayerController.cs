@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         // 읽기 전용 프로퍼티
         get
         {
-            return currentDashTime >= 0f;
+            return state == State.BlackCow && currentDashTime >= 0f;
         }
     }
 
@@ -237,6 +237,7 @@ public class PlayerController : MonoBehaviour
         {
             isDead = true;
             // TODO 죽는 애니메이션
+            Destroy(this.gameObject);
         }
         #endregion
 
