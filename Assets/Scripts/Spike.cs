@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Spine : MonoBehaviour
+public class Spike : MonoBehaviour
 {
     void OnCollisionEnter2D(Collision2D collision)
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Wall : MonoBehaviour
+public class Basalt : MonoBehaviour
 {
     void OnCollisionEnter2D(Collision2D collision)
     {
