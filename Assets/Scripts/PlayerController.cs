@@ -255,6 +255,12 @@ public class PlayerController : MonoBehaviour
             {
                 sr.color = new Color(0.8f, 0.2f, 0.2f);
             }
+            if (state == State.HummingBird)
+            {
+                animator = hummingBird.GetComponent<Animator>();
+                animator.SetBool("IsFly", false);
+                animator.SetBool("IsWalk", false);
+            }
             // TODO 죽는 애니메이션
             //Destroy(this.gameObject);
         }
