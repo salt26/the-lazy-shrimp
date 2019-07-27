@@ -4,24 +4,12 @@ using UnityEngine;
 
 public class Strawberry : MonoBehaviour
 {
-    void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("St");
         if (other.tag == "Player")
         {
-            other.gameObject.GetComponent<PlayerController>().AddHealth(60f);   // 체력 60 회복
-            Destroy(this);
-            // TODO 사라지는 애니메이션
-        }
-    }
-
-    void OnTriggerStay(Collider other)
-    {
-        Debug.Log("St");
-        if (other.tag == "Player")
-        {
-            other.gameObject.GetComponent<PlayerController>().AddHealth(60f);   // 체력 60 회복
-            Destroy(this);
+            other.gameObject.GetComponentInParent<PlayerController>().AddHealth(60f);   // 체력 60 회복
+            Destroy(this.gameObject);
             // TODO 사라지는 애니메이션
         }
     }

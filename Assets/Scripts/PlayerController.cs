@@ -203,7 +203,7 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         #region 애니메이션
-        if (!Mathf.Approximately(moveHorizontal, 0f))
+        if (!Mathf.Approximately(moveHorizontal, 0f) && !IsDashing)
         {
             if (moveHorizontal > 0f)
             {
@@ -257,7 +257,7 @@ public class PlayerController : MonoBehaviour
             UICowHealth.sizeDelta = new Vector2(UIMaxWidth * health / cowMaxHealth, UICowHealth.sizeDelta.y);
             UILazyWorkGauge.GetComponent<Image>().color = new Color(0.0f, 1.0f, 0.0f);
             UILazyWorkGauge.GetComponent<RectTransform>().sizeDelta = new Vector2(UIMaxWidth * LazyWork / 100.0f, UILazyWorkGauge.GetComponent<RectTransform>().sizeDelta.y);
-            UIHealthText.text = UIHealthText2.text = (int)health + "/" + (int)cowMaxHealth;
+            UIHealthText.text = UIHealthText2.text = Mathf.RoundToInt(health) + "/" + Mathf.RoundToInt(cowMaxHealth);
         }
         #endregion
     }
