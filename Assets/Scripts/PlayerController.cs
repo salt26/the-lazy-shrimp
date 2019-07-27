@@ -208,12 +208,12 @@ public class PlayerController : MonoBehaviour
             if (moveHorizontal > 0f)
             {
                 hummingBird.GetComponent<SpriteRenderer>().flipX = false;
-                blackCow.GetComponent<SpriteRenderer>().flipX = true;
+                blackCow.GetComponent<SpriteRenderer>().flipX = false;
             }
             else
             {
                 hummingBird.GetComponent<SpriteRenderer>().flipX = true;
-                blackCow.GetComponent<SpriteRenderer>().flipX = false;
+                blackCow.GetComponent<SpriteRenderer>().flipX = true;
             }
         }
         if (state == State.HummingBird) {
@@ -260,5 +260,11 @@ public class PlayerController : MonoBehaviour
             UIHealthText.text = UIHealthText2.text = (int)health + "/" + (int)cowMaxHealth;
         }
         #endregion
+    }
+
+    public void AddHealth(float value)
+    {
+        health += value;
+        health = Mathf.Clamp(health, 0f, maxHealth);
     }
 }
