@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float birdMaxHealth, cowMaxHealth, maxHealth;   // maxHealth: 현재 모드에서의 최대 체력
     [SerializeField]
-    private GameObject hummingBird, blackCow;
+    private GameObject hummingBird, blackCow, youDied;
 
     private float lastHorizontal = 0f;
     private float currentDashTime = -1f;    // -1f이면 대시 중이 아님, 0f 이상이면 대시 중, IsDashing으로 확인 가능
@@ -90,6 +90,10 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (GameManager.gm == null)
+        {
+            Debug.LogError("Title 씬부터 실행하세요!");
+        }
         if (isDead) return;
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
@@ -261,8 +265,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("IsFly", false);
                 animator.SetBool("IsWalk", false);
             }
-            // TODO 죽는 애니메이션
-            //Destroy(this.gameObject);
+            StartCoroutine("Death");
         }
         #endregion
 
@@ -288,5 +291,29 @@ public class PlayerController : MonoBehaviour
     {
         health += value;
         health = Mathf.Clamp(health, 0f, maxHealth);
+    }
+    
+    IEnumerator Death()
+    {
+        yield return new WaitForSeconds(0.7f);
+        youDied.SetActive(true);
+        /*
+        Color color = youDied.GetComponent<Image>().color;
+        int frame = 60;
+        for (int i = 0; i < frame; i++) {
+            color = new Color(1f, 1f, 1f, i / (float)frame);
+            foreach (Image im in GetComponentsInChildren<Image>())
+            {
+                im.color = new Color(1f, 1f, 1f, i / (float)frame);
+            }
+            yield return new WaitForSeconds(1f / frame);
+        }
+        color = new Color(1f, 1f, 1f, 1f);
+        foreach (Image im in GetComponentsInChildren<Image>())
+        {
+            im.color = new Color(1f, 1f, 1f, 1f);
+        }
+        */
+        GameManager.gm.hasPlayerDead = true;
     }
 }

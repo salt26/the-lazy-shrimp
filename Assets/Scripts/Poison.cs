@@ -25,7 +25,7 @@ public class Poison : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.gameObject.GetComponentInParent<PlayerController>().health > 0f)
         {
             other.gameObject.GetComponentInParent<PlayerController>().AddHealth(-2f);   // 초당 체력 100씩 감소
         }

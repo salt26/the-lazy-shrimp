@@ -70,6 +70,7 @@ MonoBehaviour:
   maxHealth: 60
   hummingBird: {fileID: 6879174663851639263}
   blackCow: {fileID: 6879174663854232455}
+  youDied: {fileID: 0}
   isGrounded: 0
 --- !u!50 &6879174662735329432
 Rigidbody2D:
