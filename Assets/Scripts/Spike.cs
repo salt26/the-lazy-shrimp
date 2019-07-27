@@ -9,6 +9,7 @@ public class Spike : MonoBehaviour
         if (collision.collider.tag == "Player")
         {
             collision.collider.gameObject.GetComponentInParent<PlayerController>().AddHealth(-3600f);   // 체력 3600 감소
+            collision.collider.gameObject.GetComponent<SpriteRenderer>().flipY = true;
         }
     }
 }

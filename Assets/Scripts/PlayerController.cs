@@ -197,6 +197,24 @@ public class PlayerController : MonoBehaviour
         {
             isGrounded = false;
         }
+
+        RaycastHit2D hitBelow = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(0f, -1f), Mathf.Infinity, ~(1 << 8 | 1 << 9));
+        RaycastHit2D hitAbove = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(0f, 1f), Mathf.Infinity, ~(1 << 8 | 1 << 9));
+        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(-1f, 0f), Mathf.Infinity, ~(1 << 8 | 1 << 9));
+        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(1f, 0f), Mathf.Infinity, ~(1 << 8 | 1 << 9));
+        if (hitBelow && hitAbove && hitLeft && hitRight)
+        {
+            float upDown = hitBelow.distance + hitAbove.distance;
+            float leftRight = hitLeft.distance + hitRight.distance;
+            if ((upDown < 1.5f || leftRight < 1.5f) && state == State.BlackCow)
+            {
+                // 끼어서 사망
+                Debug.Log("You zipped!");
+                if (upDown < 1.5f) GetComponent<Transform>().localScale = new Vector3(GetComponent<Transform>().localScale.x, 0.5f, 1f);
+                else if (leftRight < 1.5f) GetComponent<Transform>().localScale = new Vector3(0.4f, GetComponent<Transform>().localScale.y, 1f);
+                health = 0f;
+            }
+        }
         #endregion
 
         #region 애니메이션
@@ -233,8 +251,12 @@ public class PlayerController : MonoBehaviour
         if (health <= 0f)
         {
             isDead = true;
+            foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
+            {
+                sr.color = new Color(0.8f, 0.2f, 0.2f);
+            }
             // TODO 죽는 애니메이션
-            Destroy(this.gameObject);
+            //Destroy(this.gameObject);
         }
         #endregion
 
