@@ -17,7 +17,6 @@ public class Poison : MonoBehaviour
         ParticleSystem.ShapeModule sm = ps.shape;
         sm.radius = widthEven / 2;
         ParticleSystem.MainModule mm = ps.main;
-        mm.startLifetime = height;
         mm.startSpeed = height;
         BoxCollider2D c = GetComponent<BoxCollider2D>();
         c.offset = new Vector2(0f, height / 2f);

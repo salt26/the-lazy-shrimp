@@ -5,7 +5,7 @@ using UnityEngine;
 public class StrawberryTree : MonoBehaviour
 {
     public GameObject strawberry;
-    float genTime = 10f, currentTime = 10f;
+    float genTime = 5f, currentTime = 5f;
     Strawberry m_Strawberry;
     void Update()
     {
