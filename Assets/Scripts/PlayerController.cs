@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
         #endregion
 
         #region 애니메이션
-        if (!Mathf.Approximately(moveHorizontal, 0f))
+        if (!Mathf.Approximately(moveHorizontal, 0f) && !IsDashing)
         {
             if (moveHorizontal > 0f)
             {
