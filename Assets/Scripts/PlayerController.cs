@@ -227,4 +227,10 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
     }
+
+    public void AddHealth(float value)
+    {
+        health += value;
+        health = Mathf.Clamp(health, 0f, maxHealth);
+    }
 }
