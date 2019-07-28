@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
 
     public int level = 0;   // 스테이지 (레벨이 0인 경우 타이틀 화면)
-    [HideInInspector]
+    //[HideInInspector]
     public bool hasPlayerDead = false;
 
     private RectTransform m_TitleCursor;

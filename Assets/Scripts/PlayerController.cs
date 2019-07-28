@@ -139,7 +139,7 @@ public class PlayerController : MonoBehaviour
             blackCow.SetActive(false);
             hummingBird.SetActive(true);
             maxHealth = birdMaxHealth;
-            health = Mathf.Clamp(health, 0f, maxHealth);
+            health = maxHealth;         // 항상 풀피
         }
         #endregion
 
