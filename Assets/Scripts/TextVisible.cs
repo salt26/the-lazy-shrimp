@@ -18,13 +18,14 @@ public class TextVisible : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (player.state == PlayerController.State.HummingBird)
+        if ((player.state == PlayerController.State.HummingBird && !forCow) ||
+            (player.state == PlayerController.State.BlackCow && forCow))
         {
-            GetComponent<Text>().enabled = !forCow;
+            GetComponent<Text>().color = new Color(1f, 1f, 1f, 1f);
         }
         else
         {
-            GetComponent<Text>().enabled = forCow;
+            GetComponent<Text>().color = new Color(1f, 1f, 1f, 0f);
         }
     }
 }
