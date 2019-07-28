@@ -123,5 +123,10 @@ public class GameManager : MonoBehaviour
             level++;
             SceneManager.LoadScene(level);
         }
+        else if (level + 1 >= SceneManager.sceneCountInBuildSettings)
+        {
+            level = 0;
+            SceneManager.LoadScene(0);
+        }
     }
 }
