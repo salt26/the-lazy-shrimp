@@ -7,6 +7,7 @@ public class TextVisible : MonoBehaviour
 {
     [SerializeField]
     private bool forCow;
+    /*
     PlayerController player;
 
     // Start is called before the first frame update
@@ -28,4 +29,5 @@ public class TextVisible : MonoBehaviour
             GetComponent<Text>().color = new Color(1f, 1f, 1f, 0f);
         }
     }
+    */
 }

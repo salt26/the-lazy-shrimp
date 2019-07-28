@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     private CursorState m_CursorState = CursorState.Start;
     private GameObject youDied;
     private Text m_LevelText, m_LevelTextShadow;
+    private GameObject tutorialTextForCow, tutorialTextForBird;
+    private PlayerController player;
 
     // Start is called before the first frame update
     void Awake()
@@ -125,6 +127,31 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+        /*
+        if (SceneManager.GetActiveScene().name.Equals("Level1")) // TutorialStage
+        {
+            if (player == null)
+                player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            else if (tutorialTextForBird == null)
+                tutorialTextForBird = GameObject.Find("ForBirdTexts");
+            else if (tutorialTextForCow == null)
+                tutorialTextForCow = GameObject.Find("ForCowTexts");
+            else
+            {
+                if (player.state == PlayerController.State.HummingBird)
+                {
+                    tutorialTextForBird.SetActive(true);
+                    tutorialTextForCow.SetActive(false);
+                }
+                else
+                {
+                    tutorialTextForBird.SetActive(false);
+                    tutorialTextForCow.SetActive(true);
+                }
+
+            }
+        }
+        */
     }
     public void NextLevel()
     {
