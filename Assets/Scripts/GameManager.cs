@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     private enum CursorState {Start, Exit}
     private CursorState m_CursorState = CursorState.Start;
     private GameObject youDied;
+    private Text m_LevelText, m_LevelTextShadow;
 
     // Start is called before the first frame update
     void Awake()
@@ -28,6 +30,14 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
+        if(level > 0)
+        {
+            m_LevelText = GameObject.FindGameObjectWithTag("UILevelText").GetComponent<Text>();
+            m_LevelTextShadow = GameObject.FindGameObjectWithTag("UILevelTextShadow").GetComponent<Text>();
+
+            m_LevelText.text = level + " Stage";
+            m_LevelTextShadow.text = level + " Stage";
+        }
         if (level > 0 && youDied == null && GameObject.Find("YouDied") != null) youDied = GameObject.Find("YouDied");
         if (level == 0)
         {

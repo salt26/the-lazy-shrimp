@@ -874,7 +874,7 @@ GameObject:
   - component: {fileID: 8989310859195074513}
   m_Layer: 5
   m_Name: LevelText
-  m_TagString: Untagged
+  m_TagString: UILevelText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -939,7 +939,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4 Stage
+  m_Text: Please Wait
 --- !u!1 &5910929117349689461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1047,7 +1047,7 @@ GameObject:
   - component: {fileID: 556430898673370911}
   m_Layer: 5
   m_Name: LevelTextShadow
-  m_TagString: Untagged
+  m_TagString: UILevelTextShadow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1112,4 +1112,4 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 4 Stage
+  m_Text: Please Wait
