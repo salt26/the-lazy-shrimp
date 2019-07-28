@@ -11771,10 +11771,10 @@ Transform:
   - {fileID: 1789855655}
   - {fileID: 833527743}
   - {fileID: 1077499539}
+  - {fileID: 1496308227}
   - {fileID: 1915844076}
   - {fileID: 1713153478}
   - {fileID: 1257261689}
-  - {fileID: 1496308227}
   - {fileID: 1531001271}
   - {fileID: 384286101}
   - {fileID: 740789836}
@@ -12197,16 +12197,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 556430898673370911, guid: cbcc32a0f8b4d064981de3c446d67b0d,
-        type: 3}
-      propertyPath: m_Text
-      value: 2 Stage
-      objectReference: {fileID: 0}
-    - target: {fileID: 8989310859195074513, guid: cbcc32a0f8b4d064981de3c446d67b0d,
-        type: 3}
-      propertyPath: m_Text
-      value: 2 Stage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbcc32a0f8b4d064981de3c446d67b0d, type: 3}
