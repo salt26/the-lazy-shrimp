@@ -8,7 +8,7 @@ public class Basalt : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Player")
+        if (collision.collider.tag == "Player" && collision.collider.gameObject.GetComponentInParent<PlayerController>().health > 0f)
         {
             if (collision.collider.gameObject.GetComponentInParent<PlayerController>().IsDashing)
             {

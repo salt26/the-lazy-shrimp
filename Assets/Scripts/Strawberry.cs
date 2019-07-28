@@ -8,7 +8,7 @@ public class Strawberry : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
+        if (other.tag == "Player" && other.gameObject.GetComponentInParent<PlayerController>().health > 0f)
         {
             other.gameObject.GetComponentInParent<PlayerController>().AddHealth(60f);   // 체력 60 회복
             Instantiate(destroyed, GetComponent<Transform>().position, GetComponent<Transform>().rotation);

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -877,6 +877,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3366625754959535688, guid: 4218d3ed9fb108343b1dd8b61688b2ec,
+        type: 3}
+      propertyPath: youWin
+      value: 
+      objectReference: {fileID: 5315353872058177218}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4218d3ed9fb108343b1dd8b61688b2ec, type: 3}
 --- !u!4 &955825982 stripped
@@ -1224,7 +1229,7 @@ GameObject:
   - component: {fileID: 1389384672}
   - component: {fileID: 1389384671}
   - component: {fileID: 1389384670}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18384,6 +18389,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cbcc32a0f8b4d064981de3c446d67b0d, type: 3}
+--- !u!1 &5315353872058177218 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5910929117349689461, guid: cbcc32a0f8b4d064981de3c446d67b0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5315353872058177217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5315353872058177219 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 264995814, guid: cbcc32a0f8b4d064981de3c446d67b0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5315353872058177217}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7769264326966622184
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18481,6 +18498,11 @@ PrefabInstance:
       propertyPath: birdFlyingSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 6879174662735329435, guid: c0f22e81d53feea48b6bfa3bb19c3097,
+        type: 3}
+      propertyPath: youDied
+      value: 
+      objectReference: {fileID: 5315353872058177219}
     - target: {fileID: 6879174663851639263, guid: c0f22e81d53feea48b6bfa3bb19c3097,
         type: 3}
       propertyPath: m_Layer
