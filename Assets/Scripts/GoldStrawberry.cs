@@ -7,7 +7,7 @@ public class GoldStrawberry : MonoBehaviour
     public GameObject destroyed;
     public GameObject youWin;
     private bool isTriggered = false;
-    private float waitTime = 0.7f, currentWaitTime = 0f;
+    private float waitTime = 1.2f, currentWaitTime = 0f;
 
     void Update()
     {
