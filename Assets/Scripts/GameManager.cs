@@ -8,12 +8,11 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
 
     public int level = 0;   // 스테이지 (레벨이 0인 경우 타이틀 화면)
-    //[HideInInspector]
-    public bool hasPlayerDead = false;
 
     private RectTransform m_TitleCursor;
     private enum CursorState {Start, Exit}
     private CursorState m_CursorState = CursorState.Start;
+    private GameObject youDied;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,6 +28,7 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
+        if (level > 0 && youDied == null && GameObject.Find("YouDied") != null) youDied = GameObject.Find("YouDied");
         if (level == 0)
         {
             if (m_TitleCursor == null)
@@ -42,11 +42,10 @@ public class GameManager : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                m_CursorState = (CursorState)((int)(m_CursorState - 1) % System.Enum.GetNames(typeof(CursorState)).Length);
+                m_CursorState = (CursorState)((int)(m_CursorState + System.Enum.GetNames(typeof(CursorState)).Length - 1) % System.Enum.GetNames(typeof(CursorState)).Length);
             }
             else if (Input.GetKeyDown(KeyCode.Return))
             {
-                hasPlayerDead = false;
                 switch(m_CursorState)
                 {
                     case CursorState.Start:
@@ -73,7 +72,7 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-        if (level > 0 && hasPlayerDead)
+        if (level > 0 && youDied != null && youDied.activeInHierarchy)
         {
             if (m_TitleCursor == null)
             {
@@ -86,11 +85,10 @@ public class GameManager : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                m_CursorState = (CursorState)((int)(m_CursorState - 1) % System.Enum.GetNames(typeof(CursorState)).Length);
+                m_CursorState = (CursorState)((int)(m_CursorState + System.Enum.GetNames(typeof(CursorState)).Length - 1) % System.Enum.GetNames(typeof(CursorState)).Length);
             }
             else if (Input.GetKeyDown(KeyCode.Return))
             {
-                hasPlayerDead = false;
                 switch (m_CursorState)
                 {
                     case CursorState.Start:
@@ -124,7 +122,6 @@ public class GameManager : MonoBehaviour
         {
             level++;
             SceneManager.LoadScene(level);
-            hasPlayerDead = false;
         }
     }
 }
