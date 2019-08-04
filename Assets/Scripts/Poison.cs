@@ -29,7 +29,7 @@ public class Poison : MonoBehaviour
     {
         if (other.tag == "Player" && other.gameObject.GetComponentInParent<PlayerController>().health > 0f)
         {
-            other.gameObject.GetComponentInParent<PlayerController>().AddHealth(-2f);   // 초당 체력 100씩 감소
+            other.gameObject.GetComponentInParent<PlayerController>().AddHealth(-1.96f);   // 초당 체력 98씩 감소
         }
     }
 }
