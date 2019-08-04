@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5583004568230127615}
   - component: {fileID: 6791762000316536708}
   - component: {fileID: 591289478131856067}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Basalt
   m_TagString: Untagged
   m_Icon: {fileID: 0}

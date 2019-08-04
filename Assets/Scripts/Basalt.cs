@@ -5,14 +5,15 @@ using UnityEngine;
 public class Basalt : MonoBehaviour
 {
     public GameObject destroyed;
+    private bool isDestroyed = false;
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Player" && collision.collider.gameObject.GetComponentInParent<PlayerController>().health > 0f)
+        if (!isDestroyed && collision.collider.tag == "Player" && collision.collider.gameObject.GetComponentInParent<PlayerController>().health > 0f)
         {
             if (collision.collider.gameObject.GetComponentInParent<PlayerController>().IsDashing)
             {
-                // TODO 파괴되는 애니메이션
+                isDestroyed = true;
                 Instantiate(destroyed, GetComponent<Transform>().position, GetComponent<Transform>().rotation);
                 Destroy(this.gameObject);
             }
