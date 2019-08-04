@@ -148,10 +148,10 @@ public class PlayerController : MonoBehaviour
         if ( state == State.HummingBird )
         {
             // 새의 움직임
-            health -= 2f * Time.fixedDeltaTime;
+            if (!(Mathf.Approximately(moveHorizontal, 0f) && Mathf.Approximately(moveVertical, 0f)))
+                health -= 2f * Time.fixedDeltaTime;                     // 이동 중일 때에만 체력 감소
             movement.x = moveHorizontal * birdWalkingSpeed;
             movement.y = moveVertical * birdFlyingSpeed -  birdFallingSpeed;
-            if (movement.y > 0f) health -= Time.fixedDeltaTime;      // 상승 시 1.5배로 체력 감소
         }
         else
         {
