@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
         {
             // 새의 움직임
             if (!(Mathf.Approximately(moveHorizontal, 0f) && Mathf.Approximately(moveVertical, 0f)))
-                health -= 2f * Time.fixedDeltaTime;                     // 이동 중일 때에만 체력 감소
+                health -= 4f * Time.fixedDeltaTime;                     // 이동 중일 때에만 체력 감소
             movement.x = moveHorizontal * birdWalkingSpeed;
             movement.y = moveVertical * birdFlyingSpeed -  birdFallingSpeed;
         }
