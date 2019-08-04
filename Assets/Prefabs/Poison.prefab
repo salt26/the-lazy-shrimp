@@ -4794,3 +4794,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   widthEven: 10
   height: 5
+  reduceEdgeSize: 0.1
