@@ -7,6 +7,14 @@ TagManager:
   - Cursor
   - UILevelText
   - UILevelTextShadow
+  - SelectMenu
+  - PrevStageTextShadow
+  - PrevStageText
+  - CurrStageTextShadow
+  - CurrStageText
+  - NextStageTextShadow
+  - NextStageText
+  - StartMenu
   layers:
   - Default
   - TransparentFX
