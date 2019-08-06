@@ -173,8 +173,6 @@ public class GameManager : MonoBehaviour
                         default:
                             break;
                     }
-                    
-                    
                 }
             }
 
