@@ -63,8 +63,6 @@ MonoBehaviour:
   cowFallingSpeed: 9
   cowDashDistance: 6
   cowDashTime: 0.5
-  birdHeight: 0.27
-  cowHeight: 0.67
   birdMaxHealth: 60
   cowMaxHealth: 3000
   maxHealth: 60
@@ -91,7 +89,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!1 &6879174663851639263
 GameObject:
