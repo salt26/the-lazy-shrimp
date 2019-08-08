@@ -118,18 +118,18 @@ public class GameManager : MonoBehaviour
                     {
                         if(selectedLevel - 1 > 0)
                         {
-                            // Decrease stage number by 1
-                            selectedLevel--;
+                            // Decrease stage number by 4 (each stage has 4 substages)
+                            selectedLevel -= 4;
                             if (selectedLevel == 1)
                             {
                                 m_PrevStageText.text = m_PrevStageTextShadow.text = "";
                             }
                             else
                             {
-                                m_PrevStageText.text = m_PrevStageTextShadow.text = (selectedLevel - 1) + " Stage";
+                                m_PrevStageText.text = m_PrevStageTextShadow.text = ((selectedLevel + 3) / 4 - 1) + " Stage";
                             }
-                            m_CurrStageText.text = m_CurrStageTextShadow.text = selectedLevel + " Stage";
-                            m_NextStageText.text = m_NextStageTextShadow.text = (selectedLevel + 1) + " Stage";
+                            m_CurrStageText.text = m_CurrStageTextShadow.text = ((selectedLevel + 3) / 4) + " Stage";
+                            m_NextStageText.text = m_NextStageTextShadow.text = ((selectedLevel + 3) / 4 + 1) + " Stage";
                         }
 
                     }
@@ -138,20 +138,20 @@ public class GameManager : MonoBehaviour
                 {
                     if (m_CursorState == CursorState.Stage)
                     {
-                        // Increase stage number by 1
-                        if (selectedLevel + 1 < SceneManager.sceneCountInBuildSettings)
+                        // Increase stage number by 4 (each stage has 4 substages)
+                        if (selectedLevel + 4 < SceneManager.sceneCountInBuildSettings)
                         {
-                            selectedLevel++;
-                            if(selectedLevel + 1 == SceneManager.sceneCountInBuildSettings)
+                            selectedLevel += 4;
+                            if(selectedLevel + 4 >= SceneManager.sceneCountInBuildSettings) // Currently stage 4 doesn't have 4 substages
                             {
                                 m_NextStageText.text = m_NextStageTextShadow.text = "";
                             }
                             else
                             {
-                                m_NextStageText.text = m_NextStageTextShadow.text = (selectedLevel + 1) + " Stage";
+                                m_NextStageText.text = m_NextStageTextShadow.text = ((selectedLevel + 3) / 4 + 1) + " Stage";
                             }
-                            m_CurrStageText.text = m_CurrStageTextShadow.text = selectedLevel + " Stage";
-                            m_PrevStageText.text = m_PrevStageTextShadow.text = (selectedLevel - 1) + " Stage";
+                            m_CurrStageText.text = m_CurrStageTextShadow.text = ((selectedLevel + 3) / 4) + " Stage";
+                            m_PrevStageText.text = m_PrevStageTextShadow.text = ((selectedLevel + 3) / 4 - 1) + " Stage";
                         }
                     }
                 }
