@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float cowWalkingSpeed, cowFallingSpeed, cowDashDistance, cowDashTime;
     [SerializeField]
-    private float birdHeight, cowHeight;
-    [SerializeField]
     private float birdMaxHealth, cowMaxHealth, maxHealth;   // maxHealth: 현재 모드에서의 최대 체력
     [SerializeField]
     private GameObject hummingBird, blackCow, youDied;
@@ -34,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private float currentDashTime = -1f;    // -1f이면 대시 중이 아님, 0f 이상이면 대시 중, IsDashing으로 확인 가능
     private float currentDashDirection = 0f;
     private bool isDead = false;
+    private bool isContactLeft, isContactRight, isContactUp;
 
     [HideInInspector]
     public bool isGrounded;
@@ -143,6 +142,82 @@ public class PlayerController : MonoBehaviour
         }
         #endregion
 
+
+        #region 바닥에 닿았는지 감지
+        Bounds bounds = (state == State.HummingBird) ? hummingBird.GetComponent<Collider2D>().bounds : blackCow.GetComponent<Collider2D>().bounds;
+        float errorDistance = 0.02f;
+
+        RaycastHit2D hitBelowL = Physics2D.Raycast(bounds.center + new Vector3(-bounds.extents.x + errorDistance, 0f, 0f),
+            new Vector2(0f, -1f), bounds.extents.y + errorDistance, 1 << 11);
+        RaycastHit2D hitBelowC = Physics2D.Raycast(bounds.center,
+            new Vector2(0f, -1f), bounds.extents.y + errorDistance, 1 << 11);
+        RaycastHit2D hitBelowR = Physics2D.Raycast(bounds.center + new Vector3(bounds.extents.x - errorDistance, 0f, 0f),
+            new Vector2(0f, -1f), bounds.extents.y + errorDistance, 1 << 11);
+
+        RaycastHit2D hitAboveL = Physics2D.Raycast(bounds.center + new Vector3(-bounds.extents.x + errorDistance, 0f, 0f),
+            new Vector2(0f, 1f), bounds.extents.y + errorDistance, 1 << 11);
+        RaycastHit2D hitAboveC = Physics2D.Raycast(bounds.center,
+            new Vector2(0f, 1f), bounds.extents.y + errorDistance, 1 << 11);
+        RaycastHit2D hitAboveR = Physics2D.Raycast(bounds.center + new Vector3(bounds.extents.x - errorDistance, 0f, 0f),
+            new Vector2(0f, 1f), bounds.extents.y + errorDistance, 1 << 11);
+
+        RaycastHit2D hitLeftD = Physics2D.Raycast(bounds.center + new Vector3(0f, -bounds.extents.y + errorDistance, 0f),
+            new Vector2(-1f, 0f), bounds.extents.x + errorDistance, 1 << 11);
+        RaycastHit2D hitLeftC = Physics2D.Raycast(bounds.center,
+            new Vector2(-1f, 0f), bounds.extents.x + errorDistance, 1 << 11);
+        RaycastHit2D hitLeftU = Physics2D.Raycast(bounds.center + new Vector3(0f, bounds.extents.y - errorDistance, 0f),
+            new Vector2(-1f, 0f), bounds.extents.x + errorDistance, 1 << 11);
+
+        RaycastHit2D hitRightD = Physics2D.Raycast(bounds.center + new Vector3(0f, -bounds.extents.y + errorDistance, 0f),
+            new Vector2(1f, 0f), bounds.extents.x + errorDistance, 1 << 11);
+        RaycastHit2D hitRightC = Physics2D.Raycast(bounds.center,
+            new Vector2(1f, 0f), bounds.extents.x + errorDistance, 1 << 11);
+        RaycastHit2D hitRightU = Physics2D.Raycast(bounds.center + new Vector3(0f, bounds.extents.y - errorDistance, 0f),
+            new Vector2(1f, 0f), bounds.extents.x + errorDistance, 1 << 11);
+
+        if (hitBelowC || hitBelowL || hitBelowR)
+        {
+            isGrounded = true;
+            //Debug.Log("isGrounded");
+        }
+        else
+            isGrounded = false;
+
+        if (hitAboveC || hitAboveL || hitAboveR)
+        {
+            isContactUp = true;
+            //Debug.Log("isContactUp");
+        }
+        else
+            isContactUp = false;
+
+        if (hitLeftC || hitLeftD || hitLeftU)
+        {
+            isContactLeft = true;
+            //Debug.Log("isContactLeft");
+        }
+        else
+            isContactLeft = false;
+
+        if (hitRightC || hitRightD || hitRightU)
+        {
+            isContactRight = true;
+            //Debug.Log("isContactRight");
+        }
+        else
+            isContactRight = false;
+
+        if (state == State.BlackCow && (hitAboveC && hitBelowC || hitLeftC && hitRightC))
+        {
+            // 끼어서 사망 (판정은 캐릭터의 중심 기준)
+            //Debug.Log("You zipped!");
+            if (isGrounded && isContactUp) GetComponent<Transform>().localScale = new Vector3(GetComponent<Transform>().localScale.x, 0.5f, 1f);
+            else if (isContactLeft && isContactRight) GetComponent<Transform>().localScale = new Vector3(0.4f, GetComponent<Transform>().localScale.y, 1f);
+            health = 0f;
+        }
+        #endregion
+
+
         #region 움직임(새일 경우 체력 감소 포함)
         Vector2 movement = new Vector2(0f, 0f);
         if ( state == State.HummingBird )
@@ -152,6 +227,11 @@ public class PlayerController : MonoBehaviour
                 health -= 4f * Time.fixedDeltaTime;                     // 이동 중일 때에만 체력 감소
             movement.x = moveHorizontal * birdWalkingSpeed;
             movement.y = moveVertical * birdFlyingSpeed -  birdFallingSpeed;
+
+            if (movement.x > 0f && isContactRight) movement.x = 0f;
+            if (movement.x < 0f && isContactLeft) movement.x = 0f;
+            if (movement.y > 0f && isContactUp) movement.y = 0f;
+            if (movement.y < 0f && isGrounded) movement.y = 0f;
         }
         else
         {
@@ -188,38 +268,6 @@ public class PlayerController : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = movement;
         #endregion
 
-        #region 바닥에 닿았는지 감지
-        Vector2 ray = new Vector2(0f, -1f);
-        float height = (state == State.HummingBird) ? birdHeight : cowHeight;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), ray, height, 1 << 11);        // 0.01만 올라가도 안 닿음
-        if (hit)
-        {
-            isGrounded = true;
-            Debug.Log(hit.collider.name);
-        }
-        else
-        {
-            isGrounded = false;
-        }
-
-        RaycastHit2D hitBelow = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(0f, -1f), Mathf.Infinity, 1 << 11);
-        RaycastHit2D hitAbove = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(0f, 1f), Mathf.Infinity, 1 << 11);
-        RaycastHit2D hitLeft = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(-1f, 0f), Mathf.Infinity, 1 << 11);
-        RaycastHit2D hitRight = Physics2D.Raycast(transform.position - new Vector3(0f, 0.1f, 0f), new Vector2(1f, 0f), Mathf.Infinity, 1 << 11);
-        if (hitBelow && hitAbove && hitLeft && hitRight)
-        {
-            float upDown = hitBelow.distance + hitAbove.distance;
-            float leftRight = hitLeft.distance + hitRight.distance;
-            if ((upDown < 1.5f || leftRight < 1.5f) && state == State.BlackCow)
-            {
-                // 끼어서 사망
-                Debug.Log("You zipped!");
-                if (upDown < 1.5f) GetComponent<Transform>().localScale = new Vector3(GetComponent<Transform>().localScale.x, 0.5f, 1f);
-                else if (leftRight < 1.5f) GetComponent<Transform>().localScale = new Vector3(0.4f, GetComponent<Transform>().localScale.y, 1f);
-                health = 0f;
-            }
-        }
-        #endregion
 
         #region 애니메이션
         if (!Mathf.Approximately(moveHorizontal, 0f) && !IsDashing)
@@ -251,6 +299,7 @@ public class PlayerController : MonoBehaviour
 
         lastHorizontal = moveHorizontal;    // 깔끔한 애니메이션 재생과 대시를 위해 필요
 
+
         #region 죽음
         if (health <= 0f)
         {
@@ -268,6 +317,7 @@ public class PlayerController : MonoBehaviour
             StartCoroutine("Death");
         }
         #endregion
+
 
         #region UI
         if(state == State.HummingBird)
@@ -297,22 +347,5 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.7f);
         youDied.SetActive(true);
-        /*
-        Color color = youDied.GetComponent<Image>().color;
-        int frame = 60;
-        for (int i = 0; i < frame; i++) {
-            color = new Color(1f, 1f, 1f, i / (float)frame);
-            foreach (Image im in GetComponentsInChildren<Image>())
-            {
-                im.color = new Color(1f, 1f, 1f, i / (float)frame);
-            }
-            yield return new WaitForSeconds(1f / frame);
-        }
-        color = new Color(1f, 1f, 1f, 1f);
-        foreach (Image im in GetComponentsInChildren<Image>())
-        {
-            im.color = new Color(1f, 1f, 1f, 1f);
-        }
-        */
     }
 }
