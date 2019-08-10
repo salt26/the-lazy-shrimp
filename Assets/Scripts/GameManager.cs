@@ -282,6 +282,7 @@ public class GameManager : MonoBehaviour
         else if (level + 1 >= SceneManager.sceneCountInBuildSettings)
         {
             level = 0;
+            selectedLevel = 1;
             SceneManager.LoadScene(0);
         }
     }
