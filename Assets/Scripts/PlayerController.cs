@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     private float lastHorizontal = 0f;
     private float currentDashTime = -1f;    // -1f이면 대시 중이 아님, 0f 이상이면 대시 중, IsDashing으로 확인 가능
     private float currentDashDirection = 0f;
+    private int dashInputFrame = 0;
     private bool isDead = false;
     private bool isContactLeft, isContactRight, isContactUp;
 
@@ -250,13 +251,22 @@ public class PlayerController : MonoBehaviour
                 movement.y = isGrounded ? 0f : -cowFallingSpeed;
             }
 
-            if (Input.GetKeyDown(KeyCode.Z) && !IsDashing && isGrounded &&
-                Mathf.Abs(moveHorizontal) - Mathf.Abs(lastHorizontal) >= 0f && !Mathf.Approximately(moveHorizontal, 0f))
+            if (Input.GetKeyDown(KeyCode.Z) && !IsDashing && isGrounded)
+            {
+                dashInputFrame = 5;
+            }
+            if (dashInputFrame > 0 && Mathf.Abs(moveHorizontal) - Mathf.Abs(lastHorizontal) >= 0f && !Mathf.Approximately(moveHorizontal, 0f))
             {
                 // 움직이던 방향으로 대시 발동
+                dashInputFrame = 0;
                 currentDashTime = 0f;
                 currentDashDirection = Mathf.Sign(moveHorizontal);
             }
+            if (dashInputFrame > 0)
+            {
+                dashInputFrame--;
+            }
+
             if (currentDashTime > cowDashTime)
             {
                 // 대시 끝내기
