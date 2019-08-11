@@ -10,6 +10,11 @@ public class Spike : MonoBehaviour
         {
             collision.collider.gameObject.GetComponentInParent<PlayerController>().AddHealth(-3600f);   // 체력 3600 감소
             collision.collider.gameObject.GetComponent<SpriteRenderer>().flipY = true;
+            if (collision.collider.gameObject.GetComponentInParent<PlayerController>().state == PlayerController.State.BlackCow)
+            {
+                collision.collider.gameObject.GetComponent<Transform>().localPosition = new Vector3(0f, -0.25f, 0f);
+                collision.collider.offset = new Vector2(-0.015f, 0.225f);
+            }
         }
     }
 }

@@ -99,6 +99,8 @@ public class PlayerController : MonoBehaviour
         float moveVertical = Input.GetAxis("Vertical");
 
         bool isWorking; // 일하는 중인지, 즉 키보드 입력을 받고 있거나 대시 중인지
+        bool isStanding = false;
+        bool initializeToIdle = false;
 
         #region 변신
         if (!(state == State.BlackCow && IsDashing) && Mathf.Approximately(moveHorizontal, 0f) &&
@@ -136,6 +138,9 @@ public class PlayerController : MonoBehaviour
             currentTransformWork = 0f;
             currentTransformLazy = 0f;
             state = State.HummingBird;
+            initializeToIdle = true;
+            animator = blackCow.GetComponent<Animator>();
+            animator.SetBool("Initialize", true);
             blackCow.SetActive(false);
             hummingBird.SetActive(true);
             maxHealth = birdMaxHealth;
@@ -244,20 +249,28 @@ public class PlayerController : MonoBehaviour
                 movement.x = currentDashDirection * (2 * cowDashDistance / cowDashTime) * (1 - currentDashTime / cowDashTime);
                 movement.y = 0f;
             }
+            else if (Input.GetKeyDown(KeyCode.X) && isGrounded && Mathf.Approximately(moveHorizontal, 0f))
+            {
+                isStanding = true;
+            }
             else
             {
-                // 대시 중이 아님
+                // 대시 중이 아니고 서 있는 중이 아님
                 movement.x = moveHorizontal * cowWalkingSpeed;
                 movement.y = isGrounded ? 0f : -cowFallingSpeed;
             }
 
             if (Input.GetKeyDown(KeyCode.Z) && !IsDashing && isGrounded)
             {
+                // 5프레임 동안 방향키 입력을 추가로 받음
+                isStanding = false;
                 dashInputFrame = 5;
             }
             if (dashInputFrame > 0 && Mathf.Abs(moveHorizontal) - Mathf.Abs(lastHorizontal) >= 0f && !Mathf.Approximately(moveHorizontal, 0f))
             {
-                // 움직이던 방향으로 대시 발동
+                // Z키 누르고 나서 5프레임 이내에 방향키를 입력하면, 움직이던 방향으로 대시 발동
+                isStanding = false;
+                initializeToIdle = true;
                 dashInputFrame = 0;
                 currentDashTime = 0f;
                 currentDashDirection = Mathf.Sign(moveHorizontal);
@@ -273,6 +286,14 @@ public class PlayerController : MonoBehaviour
                 // 벽에 충돌 시 즉시 끝나게 해야 함
                 currentDashTime = -1f;
                 currentDashDirection = 0f;
+            }
+            
+            if (isStanding && !isWorking && !IsDashing)
+            {
+                // 일어서는 행동을 할 때마다 게으름 게이지 5씩 감소 
+                currentTransformWork += 5f;
+                movement.x = 0f;
+                movement.y = 0f;
             }
         }
         GetComponent<Rigidbody2D>().velocity = movement;
@@ -304,6 +325,8 @@ public class PlayerController : MonoBehaviour
             animator = blackCow.GetComponent<Animator>();
             animator.SetBool("IsDashing", IsDashing);
             animator.SetBool("IsWalk", isWorking && (Mathf.Abs(moveHorizontal) - Mathf.Abs(lastHorizontal) >= 0f));
+            animator.SetBool("IsStanding", isStanding && !isWorking && !IsDashing);
+            animator.SetBool("Initialize", initializeToIdle);
         }
         #endregion
 
@@ -330,14 +353,14 @@ public class PlayerController : MonoBehaviour
 
 
         #region UI
-        if(state == State.HummingBird)
+        if (state == State.HummingBird)
         {
             UIHealth.sizeDelta = new Vector2(UIMaxWidth * health / birdMaxHealth, UIHealth.sizeDelta.y);
             UILazy.sizeDelta = new Vector2(UIMaxWidth * LazyWork / 100.0f, UILazy.sizeDelta.y);
             UIWork.sizeDelta = new Vector2(0.0f, UIWork.sizeDelta.y);
             UIHealthText.text = UIHealthText2.text = (int)health + "/" + (int)birdMaxHealth;
         }
-        else if(state == State.BlackCow)
+        else if (state == State.BlackCow)
         {
             UIHealth.sizeDelta = new Vector2(UIMaxWidth * health / cowMaxHealth, UIHealth.sizeDelta.y);
             UILazy.sizeDelta = new Vector2(0.0f, UILazy.sizeDelta.y);
