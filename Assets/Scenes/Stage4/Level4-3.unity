@@ -192,6 +192,11 @@ PrefabInstance:
       propertyPath: youWin
       value: 
       objectReference: {fileID: 5315353872058177218}
+    - target: {fileID: 3366625754959535688, guid: 4218d3ed9fb108343b1dd8b61688b2ec,
+        type: 3}
+      propertyPath: youWinUI
+      value: 
+      objectReference: {fileID: 5315353872058177220}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4218d3ed9fb108343b1dd8b61688b2ec, type: 3}
 --- !u!4 &2308978 stripped
@@ -2403,7 +2408,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 1e-45, w: 0}
+  m_BoundingSphereOverride: {x: 3.762e-42, y: 9.031397e-27, z: 1e-45, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -22254,6 +22259,12 @@ GameObject:
 --- !u!1 &5315353872058177219 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 264995814, guid: cbcc32a0f8b4d064981de3c446d67b0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5315353872058177217}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5315353872058177220 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8833694173407381934, guid: cbcc32a0f8b4d064981de3c446d67b0d,
     type: 3}
   m_PrefabInstance: {fileID: 5315353872058177217}
   m_PrefabAsset: {fileID: 0}
