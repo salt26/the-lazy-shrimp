@@ -10321,6 +10321,12 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 669701061}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &669701069 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8833694173407381934, guid: cbcc32a0f8b4d064981de3c446d67b0d,
+    type: 3}
+  m_PrefabInstance: {fileID: 669701061}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &763512630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11632,6 +11638,11 @@ PrefabInstance:
       propertyPath: youWin
       value: 
       objectReference: {fileID: 669701063}
+    - target: {fileID: 3366625754959535688, guid: 4218d3ed9fb108343b1dd8b61688b2ec,
+        type: 3}
+      propertyPath: youWinUI
+      value: 
+      objectReference: {fileID: 669701069}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4218d3ed9fb108343b1dd8b61688b2ec, type: 3}
 --- !u!4 &1748168834 stripped

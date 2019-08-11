@@ -6,6 +6,7 @@ public class GoldStrawberry : MonoBehaviour
 {
     public GameObject destroyed;
     public GameObject youWin;
+    public GameObject youWinUI;
     private bool isTriggered = false;
     private float waitTime = 1.2f, currentWaitTime = 0f;
 
@@ -15,8 +16,19 @@ public class GoldStrawberry : MonoBehaviour
         {
             if (currentWaitTime > waitTime)
             {
-                GameManager.gm.NextLevel();
-                Destroy(this.gameObject);
+                if(youWinUI.activeSelf == false)
+                {
+                    youWinUI.SetActive(true);
+                }
+                else
+                {
+                    if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
+                    {
+                        GameManager.gm.NextLevel();
+                        Destroy(this.gameObject);
+                    }
+                }
+                
             }
             currentWaitTime += Time.deltaTime;
         }
