@@ -13,13 +13,14 @@ public class GameManager : MonoBehaviour
     private RectTransform m_TitleCursor;
     private bool stageSelect;
     private int selectedLevel = 1;
-    private enum CursorState {Start, Exit, Stage, Return};
+    private enum CursorState {Stage};
     private CursorState m_CursorState = CursorState.Stage;
     private GameObject youDied;
     private Text m_LevelText, m_LevelTextShadow;
     public GameObject buttonStart, buttonExit;
     public GameObject selectMenu;
     public GameObject cursor;
+    public GameObject prevStageKey, nextStageKey;
     private Text m_PrevStageText, m_PrevStageTextShadow;
     private Text m_CurrStageText, m_CurrStageTextShadow;
     private Text m_NextStageText, m_NextStageTextShadow;
@@ -36,6 +37,8 @@ public class GameManager : MonoBehaviour
         }
         gm = this;
         selectMenu.SetActive(false);
+        prevStageKey.SetActive(false);
+        nextStageKey.SetActive(false);
         DontDestroyOnLoad(this);
     }
 
@@ -63,6 +66,14 @@ public class GameManager : MonoBehaviour
             if (buttonExit == null && GameObject.Find("ButtonEXIT") != null) buttonExit = GameObject.Find("ButtonEXIT");
             if (selectMenu == null && GameObject.FindGameObjectWithTag("SelectMenu") != null) selectMenu = GameObject.FindGameObjectWithTag("SelectMenu");
             if (cursor == null && GameObject.FindGameObjectWithTag("Cursor") != null) cursor = GameObject.FindGameObjectWithTag("Cursor");
+            if (prevStageKey == null && GameObject.FindGameObjectWithTag("PrevStageKey") != null) prevStageKey = GameObject.FindGameObjectWithTag("PrevStageKey");
+            if (nextStageKey == null && GameObject.FindGameObjectWithTag("NextStageKey") != null) nextStageKey = GameObject.FindGameObjectWithTag("NextStageKey");
+            if (!stageSelect)
+            {
+                prevStageKey.SetActive(false);
+                nextStageKey.SetActive(false);
+            }
+
             if (m_TitleCursor == null)
             {
                 m_TitleCursor = cursor.GetComponent<RectTransform>();
@@ -74,12 +85,6 @@ public class GameManager : MonoBehaviour
                 if (!buttonStart.activeSelf) buttonStart.SetActive(true);
                 if (!buttonExit.activeSelf) buttonExit.SetActive(true);
                 if (cursor.activeSelf) cursor.SetActive(false);
-                /*
-                if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow))
-                {
-                    m_CursorState = m_CursorState == CursorState.Start ? CursorState.Exit : CursorState.Start;
-                }
-                */
                 if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
                 {
                     buttonStart.SetActive(false);
@@ -87,33 +92,13 @@ public class GameManager : MonoBehaviour
                     selectMenu.SetActive(true);
                     cursor.SetActive(true);
                     stageSelect = true;
+                    prevStageKey.SetActive(false);
+                    nextStageKey.SetActive(true);
                     m_CursorState = CursorState.Stage;
                 }
                 else if (Input.GetKeyDown(KeyCode.Escape)) {
                     Application.Quit();
                 }
-                /*
-                else if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    switch (m_CursorState)
-                    {
-                        case CursorState.Start:
-                            buttonStart.SetActive(false);
-                            buttonExit.SetActive(false);
-                            selectMenu.SetActive(true);
-                            stageSelect = true;
-                            m_CursorState = CursorState.Stage;
-                            break;
-
-                        case CursorState.Exit:
-                            Application.Quit();
-                            break;
-
-                        default:
-                            break;
-                    }
-                }
-                */
             }
             else
             {
@@ -123,11 +108,9 @@ public class GameManager : MonoBehaviour
                 m_CurrStageTextShadow = GameObject.FindGameObjectWithTag("CurrStageTextShadow").GetComponent<Text>();
                 m_NextStageText = GameObject.FindGameObjectWithTag("NextStageText").GetComponent<Text>();
                 m_NextStageTextShadow = GameObject.FindGameObjectWithTag("NextStageTextShadow").GetComponent<Text>();
-                if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-                {
-                    m_CursorState = (m_CursorState == CursorState.Stage ? CursorState.Return : CursorState.Stage);
-                }
-                else if (Input.GetKeyDown(KeyCode.UpArrow))
+                if (prevStageKey == null && GameObject.FindGameObjectWithTag("PrevStageKey") != null) prevStageKey = GameObject.FindGameObjectWithTag("PrevStageKey");
+                if (nextStageKey == null && GameObject.FindGameObjectWithTag("NextStageKey") != null) nextStageKey = GameObject.FindGameObjectWithTag("NextStageKey");
+                if (Input.GetKeyDown(KeyCode.UpArrow))
                 {
                     if (m_CursorState == CursorState.Stage)
                     {
@@ -137,10 +120,15 @@ public class GameManager : MonoBehaviour
                             selectedLevel -= 4;
                             if (selectedLevel == 1)
                             {
+                                // prevStageKey.GetComponent<Image>().color.a = 0;
+                                prevStageKey.SetActive(false);
+                                nextStageKey.SetActive(true);
                                 m_PrevStageText.text = m_PrevStageTextShadow.text = "";
                             }
                             else
                             {
+                                prevStageKey.SetActive(true);
+                                nextStageKey.SetActive(true);
                                 m_PrevStageText.text = m_PrevStageTextShadow.text = ((selectedLevel + 3) / 4 - 1) + " Stage";
                             }
                             m_CurrStageText.text = m_CurrStageTextShadow.text = ((selectedLevel + 3) / 4) + " Stage";
@@ -159,10 +147,14 @@ public class GameManager : MonoBehaviour
                             selectedLevel += 4;
                             if (selectedLevel + 4 >= SceneManager.sceneCountInBuildSettings) // Currently stage 4 doesn't have 4 substages
                             {
+                                prevStageKey.SetActive(true);
+                                nextStageKey.SetActive(false);
                                 m_NextStageText.text = m_NextStageTextShadow.text = "";
                             }
                             else
                             {
+                                prevStageKey.SetActive(true);
+                                nextStageKey.SetActive(true);
                                 m_NextStageText.text = m_NextStageTextShadow.text = ((selectedLevel + 3) / 4 + 1) + " Stage";
                             }
                             m_CurrStageText.text = m_CurrStageTextShadow.text = ((selectedLevel + 3) / 4) + " Stage";
@@ -172,24 +164,17 @@ public class GameManager : MonoBehaviour
                 }
                 else if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
                 {
-                    // buttonStart.SetActive(true);
-                    // buttonExit.SetActive(true);
-                    // selectMenu.SetActive(false);
-                    switch (m_CursorState)
-                    {
-                        case CursorState.Stage:
-                            SceneManager.LoadScene(selectedLevel);
-                            level = selectedLevel;
-                            break;
-
-                        case CursorState.Return:
-                            stageSelect = false;
-                            m_CursorState = CursorState.Stage;
-                            break;
-
-                        default:
-                            break;
-                    }
+                    SceneManager.LoadScene(selectedLevel);
+                    level = selectedLevel;
+                }
+                else if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    stageSelect = false;
+                    selectedLevel = 1;
+                    m_CursorState = CursorState.Stage;
+                    m_PrevStageText.text = m_PrevStageTextShadow.text = "";
+                    m_CurrStageText.text = m_CurrStageTextShadow.text = "1 Stage";
+                    m_NextStageText.text = m_NextStageTextShadow.text = "2 Stage";
                 }
             }
 
@@ -200,11 +185,6 @@ public class GameManager : MonoBehaviour
                     m_TitleCursor.offsetMin = new Vector2(230.0f, 138.0f);
                     break;
 
-                case CursorState.Return:
-                    m_TitleCursor.offsetMax = new Vector2(-530.0f, -532.0f);
-                    m_TitleCursor.offsetMin = new Vector2(700.0f, 138.0f);
-                    break;
-
                 default:
                     break;
             }
@@ -212,20 +192,6 @@ public class GameManager : MonoBehaviour
         if (level > 0 && youDied != null && youDied.activeInHierarchy)
         {
             stageSelect = false;
-            /*
-            if (m_TitleCursor == null)
-            {
-                m_TitleCursor = GameObject.FindGameObjectWithTag("Cursor").GetComponent<RectTransform>();
-                m_CursorState = CursorState.Start;
-                stageSelect = false;
-            }
-            */
-            /*
-            if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                m_CursorState = (m_CursorState == CursorState.Start ? CursorState.Exit : CursorState.Start);
-            }
-            */
             if (Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.Return))
             {
                 SceneManager.LoadScene(level);
@@ -237,39 +203,6 @@ public class GameManager : MonoBehaviour
                 level = 0;
                 selectedLevel = 1;
             }
-            /*
-            else if (Input.GetKeyDown(KeyCode.Return))
-            {
-                switch (m_CursorState)
-                {
-                    case CursorState.Start:
-                        SceneManager.LoadScene(level);
-                        break;
-
-                    case CursorState.Exit:
-                        SceneManager.LoadScene(0);
-                        m_CursorState = CursorState.Start;
-                        level = 0;
-                        selectedLevel = 1;
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            switch (m_CursorState)
-            {
-                case CursorState.Start:
-                    m_TitleCursor.offsetMax = new Vector2(-761.0f, -463.0f);
-                    m_TitleCursor.offsetMin = new Vector2(469.0f, 207.0f);
-                    break;
-
-                case CursorState.Exit:
-                    m_TitleCursor.offsetMax = new Vector2(-761.0f, -532.0f);
-                    m_TitleCursor.offsetMin = new Vector2(469.0f, 138.0f);
-                    break;
-            }
-            */
         }
         /*
         if (SceneManager.GetActiveScene().name.Equals("Level1")) // TutorialStage
