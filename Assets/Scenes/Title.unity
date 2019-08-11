@@ -1403,7 +1403,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -106, y: -128}
+  m_AnchoredPosition: {x: -385, y: -197}
   m_SizeDelta: {x: -1230, y: -670}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &759368650
@@ -2655,6 +2655,7 @@ MonoBehaviour:
   buttonStart: {fileID: 1757287931}
   buttonExit: {fileID: 1456606204}
   selectMenu: {fileID: 2127634263}
+  cursor: {fileID: 759368648}
 --- !u!4 &1630143725
 Transform:
   m_ObjectHideFlags: 0
