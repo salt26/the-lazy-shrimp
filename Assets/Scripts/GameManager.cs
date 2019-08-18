@@ -142,10 +142,10 @@ public class GameManager : MonoBehaviour
                     if (m_CursorState == CursorState.Stage)
                     {
                         // Increase stage number by 4 (each stage has 4 substages)
-                        if (selectedLevel + 4 < SceneManager.sceneCountInBuildSettings)
+                        if (selectedLevel + 4 < SceneManager.sceneCountInBuildSettings - 1)
                         {
                             selectedLevel += 4;
-                            if (selectedLevel + 4 >= SceneManager.sceneCountInBuildSettings) // Currently stage 4 doesn't have 4 substages
+                            if (selectedLevel + 4 >= SceneManager.sceneCountInBuildSettings - 1) // Currently stage 4 doesn't have 4 substages
                             {
                                 prevStageKey.SetActive(true);
                                 nextStageKey.SetActive(false);
