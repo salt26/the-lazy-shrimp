@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GoldStrawberry : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class GoldStrawberry : MonoBehaviour
                 if(youWinUI.activeSelf == false)
                 {
                     youWinUI.SetActive(true);
+                    StartCoroutine(WinUIText());
                 }
                 else
                 {
@@ -45,6 +47,27 @@ public class GoldStrawberry : MonoBehaviour
             youWin.SetActive(true);
             youWin.GetComponent<Animator>().SetTrigger("Win");
             GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
+
+    IEnumerator WinUIText()
+    {
+        RectTransform textImage = youWinUI.GetComponentInChildren<Image>().rectTransform;
+        float timer = 0.0f;
+        textImage.anchoredPosition = new Vector2(0.0f, 405.0f);
+        while(timer < 2.25f)
+        {
+            timer += Time.deltaTime * 2;
+            textImage.anchoredPosition = new Vector2(0.0f, Mathf.Max(405.0f - 80 * timer * timer, 0.0f));
+            yield return null;
+        }
+
+        timer = -1.0f;
+        while(timer < 1.0f)
+        {
+            timer += Time.deltaTime * 2;
+            textImage.anchoredPosition = new Vector2(0.0f, Mathf.Max(80.0f - 80 * timer * timer, 0.0f));
+            yield return null;
         }
     }
 }
