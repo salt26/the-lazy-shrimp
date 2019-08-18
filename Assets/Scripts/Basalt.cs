@@ -6,6 +6,13 @@ public class Basalt : MonoBehaviour
 {
     public GameObject destroyed;
     private bool isDestroyed = false;
+    private AudioSource audioSource;
+    public AudioClip clip;
+
+    void Start()
+    {
+        audioSource = GameObject.Find("Shrimp").GetComponent<AudioSource>();
+    }
 
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -13,6 +20,7 @@ public class Basalt : MonoBehaviour
         {
             if (collision.collider.gameObject.GetComponentInParent<PlayerController>().IsDashing)
             {
+                audioSource.PlayOneShot(clip);
                 isDestroyed = true;
                 Instantiate(destroyed, GetComponent<Transform>().position, GetComponent<Transform>().rotation);
                 Destroy(this.gameObject);
