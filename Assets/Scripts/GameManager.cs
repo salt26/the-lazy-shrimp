@@ -241,6 +241,7 @@ public class GameManager : MonoBehaviour
         {
             level = 0;
             selectedLevel = 1;
+            stageSelect = false;
             SceneManager.LoadScene(0);
         }
     }
