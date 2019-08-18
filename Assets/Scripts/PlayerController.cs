@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     private float currentDashTime = -1f;    // -1f이면 대시 중이 아님, 0f 이상이면 대시 중, IsDashing으로 확인 가능
     private float currentDashDirection = 0f;
     private int dashInputFrame = 0;
-    private bool isDead = false;
+    private bool isDead = false, isWin = false;
     private bool isContactLeft, isContactRight, isContactUp;
 
     [HideInInspector]
@@ -45,6 +45,11 @@ public class PlayerController : MonoBehaviour
         {
             return state == State.BlackCow && currentDashTime >= 0f;
         }
+    }
+
+    public void Win()
+    {
+        isWin = true;
     }
 
     /// <summary>
@@ -334,7 +339,7 @@ public class PlayerController : MonoBehaviour
 
 
         #region 죽음
-        if (health <= 0f)
+        if (health <= 0f && !isWin)
         {
             isDead = true;
             foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())

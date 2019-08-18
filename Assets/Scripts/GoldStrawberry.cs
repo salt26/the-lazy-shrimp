@@ -39,6 +39,7 @@ public class GoldStrawberry : MonoBehaviour
         if (other.tag == "Player" && other.gameObject.GetComponentInParent<PlayerController>().health > 0f && !isTriggered)
         {
             isTriggered = true;
+            other.gameObject.GetComponentInParent<PlayerController>().Win();
             other.gameObject.GetComponentInParent<PlayerController>().AddHealth(3000f);   // 체력 3000 회복
             Instantiate(destroyed, GetComponent<Transform>().position, GetComponent<Transform>().rotation);
             youWin.SetActive(true);
