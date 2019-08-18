@@ -55,8 +55,14 @@ public class GameManager : MonoBehaviour
             m_LevelTextShadow = GameObject.FindGameObjectWithTag("UILevelTextShadow").GetComponent<Text>();
 
             --level;
-            m_LevelText.text = (level / 4 + 1) + "-" + (level % 4 + 1) + " Stage";
-            m_LevelTextShadow.text = (level / 4 + 1) + "-" + (level % 4 + 1) + " Stage";
+            if(level + 1 < SceneManager.sceneCountInBuildSettings) { 
+                m_LevelText.text = (level / 4 + 1) + "-" + (level % 4 + 1) + " Stage";
+                m_LevelTextShadow.text = (level / 4 + 1) + "-" + (level % 4 + 1) + " Stage";
+            }
+            else
+            {
+                m_LevelText.text = m_LevelTextShadow.text = "Credit";
+            }
             ++level;
         }
         if (level > 0 && youDied == null && GameObject.Find("YouDied") != null) youDied = GameObject.Find("YouDied");
