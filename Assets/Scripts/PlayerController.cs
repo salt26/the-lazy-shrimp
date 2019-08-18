@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public RectTransform UIHealth, UILazy, UIWork; //UI용
     public Text UIHealthText, UIHealthText2;                    //UI용
     public float UIMaxWidth;                                    //UI용, 체력바의 최대 길이
+    public AudioClip deathClip;
+    public AudioClip mooJoyClip;
+    public AudioClip mooSadClip;
     [SerializeField]
     private float transformLazy, transformWork;                 // 이만큼 가만히 있으면 소로 변함, 이만큼 게이지가 차면 새로 변함
     private float currentTransformLazy, currentTransformWork;   // 현재 가만히 있는 게이지, 현재 일 게이지
@@ -136,6 +139,7 @@ public class PlayerController : MonoBehaviour
             blackCow.SetActive(true);
             maxHealth = cowMaxHealth;
             health = Mathf.Clamp(health * (cowMaxHealth / birdMaxHealth), 0f, maxHealth);   // 체력 비례
+            GetComponent<AudioSource>().PlayOneShot(mooJoyClip);
         }
         if (state == State.BlackCow && currentTransformWork > transformWork && !IsDashing)
         {
@@ -342,6 +346,10 @@ public class PlayerController : MonoBehaviour
         if (health <= 0f && !isWin)
         {
             isDead = true;
+            if (state == State.BlackCow)
+                GetComponent<AudioSource>().PlayOneShot(mooSadClip);
+            else
+                GetComponent<AudioSource>().PlayOneShot(deathClip);
             foreach (SpriteRenderer sr in GetComponentsInChildren<SpriteRenderer>())
             {
                 sr.color = new Color(0.8f, 0.2f, 0.2f);
