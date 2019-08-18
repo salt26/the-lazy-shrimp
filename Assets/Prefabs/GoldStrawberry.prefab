@@ -134,3 +134,5 @@ MonoBehaviour:
   destroyed: {fileID: 3869096254267427470, guid: 2c2d734e42a761a48a52294154f00335,
     type: 3}
   youWin: {fileID: 0}
+  youWinUI: {fileID: 0}
+  clip: {fileID: 8300000, guid: afd58629fde88c049ae361abb86cc355, type: 3}

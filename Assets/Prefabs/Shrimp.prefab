@@ -58,6 +58,9 @@ MonoBehaviour:
   deathClip: {fileID: 8300000, guid: 87d645913f61b26469cfc5d027504ff2, type: 3}
   mooJoyClip: {fileID: 8300000, guid: fcf97888b7078b947a94ec7b7d2e96e7, type: 3}
   mooSadClip: {fileID: 8300000, guid: 97dbf27a81096f549b16e29ed90b1a01, type: 3}
+  mooRushClip: {fileID: 8300000, guid: da19deee45fcacf4d9595e0875c5391e, type: 3}
+  birdClip: {fileID: 8300000, guid: d9c5651816ff1e546a3ca2d6ccd75234, type: 3}
+  blowClip: {fileID: 8300000, guid: 72621a884324818499d166fe86fea19b, type: 3}
   transformLazy: 3
   transformWork: 100
   birdWalkingSpeed: 6

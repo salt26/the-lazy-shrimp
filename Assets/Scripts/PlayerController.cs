@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip deathClip;
     public AudioClip mooJoyClip;
     public AudioClip mooSadClip;
+    public AudioClip mooRushClip;
+    public AudioClip birdClip;
+    public AudioClip blowClip;
     [SerializeField]
     private float transformLazy, transformWork;                 // 이만큼 가만히 있으면 소로 변함, 이만큼 게이지가 차면 새로 변함
     private float currentTransformLazy, currentTransformWork;   // 현재 가만히 있는 게이지, 현재 일 게이지
@@ -35,7 +38,7 @@ public class PlayerController : MonoBehaviour
     private float currentDashTime = -1f;    // -1f이면 대시 중이 아님, 0f 이상이면 대시 중, IsDashing으로 확인 가능
     private float currentDashDirection = 0f;
     private int dashInputFrame = 0;
-    private bool isDead = false, isWin = false;
+    private bool isDead = false;
     private bool isContactLeft, isContactRight, isContactUp;
 
     [HideInInspector]
@@ -50,9 +53,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool IsWin { get; private set; } = false;
+
     public void Win()
     {
-        isWin = true;
+        IsWin = true;
     }
 
     /// <summary>
@@ -129,7 +134,7 @@ public class PlayerController : MonoBehaviour
         }
         //Debug.Log("LazyWork = " + LazyWork);
 
-        if (state == State.HummingBird && currentTransformLazy > transformLazy)
+        if (state == State.HummingBird && currentTransformLazy > transformLazy && !IsWin)
         {
             // 소로 변신
             currentTransformLazy = 0f;
@@ -139,7 +144,7 @@ public class PlayerController : MonoBehaviour
             blackCow.SetActive(true);
             maxHealth = cowMaxHealth;
             health = Mathf.Clamp(health * (cowMaxHealth / birdMaxHealth), 0f, maxHealth);   // 체력 비례
-            GetComponent<AudioSource>().PlayOneShot(mooJoyClip);
+            GetComponent<AudioSource>().PlayOneShot(mooJoyClip, 0.75f);
         }
         if (state == State.BlackCow && currentTransformWork > transformWork && !IsDashing)
         {
@@ -154,6 +159,7 @@ public class PlayerController : MonoBehaviour
             hummingBird.SetActive(true);
             maxHealth = birdMaxHealth;
             health = maxHealth;         // 항상 풀피
+            GetComponent<AudioSource>().PlayOneShot(birdClip);
         }
         #endregion
 
@@ -283,6 +289,7 @@ public class PlayerController : MonoBehaviour
                 dashInputFrame = 0;
                 currentDashTime = 0f;
                 currentDashDirection = Mathf.Sign(moveHorizontal);
+                GetComponent<AudioSource>().PlayOneShot(mooRushClip);
             }
             if (dashInputFrame > 0)
             {
@@ -303,6 +310,7 @@ public class PlayerController : MonoBehaviour
                 currentTransformWork += 5f;
                 movement.x = 0f;
                 movement.y = 0f;
+                GetComponent<AudioSource>().PlayOneShot(blowClip);
             }
         }
         GetComponent<Rigidbody2D>().velocity = movement;
@@ -343,7 +351,7 @@ public class PlayerController : MonoBehaviour
 
 
         #region 죽음
-        if (health <= 0f && !isWin)
+        if (health <= 0f && !IsWin)
         {
             isDead = true;
             if (state == State.BlackCow)

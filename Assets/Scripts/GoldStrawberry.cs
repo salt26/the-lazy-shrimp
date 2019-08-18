@@ -10,6 +10,13 @@ public class GoldStrawberry : MonoBehaviour
     public GameObject youWinUI;
     private bool isTriggered = false;
     private float waitTime = 1.2f, currentWaitTime = 0f;
+    private AudioSource audioSource;
+    public AudioClip clip;
+
+    void Start()
+    {
+        audioSource = GameObject.Find("Shrimp").GetComponent<AudioSource>();
+    }
 
     void Update()
     {
@@ -38,8 +45,10 @@ public class GoldStrawberry : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player" && other.gameObject.GetComponentInParent<PlayerController>().health > 0f && !isTriggered)
+        if (other.tag == "Player" && other.gameObject.GetComponentInParent<PlayerController>().health > 0f && !isTriggered &&
+            !other.gameObject.GetComponentInParent<PlayerController>().IsWin)
         {
+            audioSource.PlayOneShot(clip);
             isTriggered = true;
             other.gameObject.GetComponentInParent<PlayerController>().Win();
             other.gameObject.GetComponentInParent<PlayerController>().AddHealth(3000f);   // 체력 3000 회복
@@ -57,7 +66,7 @@ public class GoldStrawberry : MonoBehaviour
         textImage.anchoredPosition = new Vector2(0.0f, 405.0f);
         while(timer < 2.25f)
         {
-            timer += Time.deltaTime * 2;
+            timer += Time.deltaTime * 4;
             textImage.anchoredPosition = new Vector2(0.0f, Mathf.Max(405.0f - 80 * timer * timer, 0.0f));
             yield return null;
         }
@@ -65,7 +74,7 @@ public class GoldStrawberry : MonoBehaviour
         timer = -1.0f;
         while(timer < 1.0f)
         {
-            timer += Time.deltaTime * 2;
+            timer += Time.deltaTime * 4;
             textImage.anchoredPosition = new Vector2(0.0f, Mathf.Max(80.0f - 80 * timer * timer, 0.0f));
             yield return null;
         }
