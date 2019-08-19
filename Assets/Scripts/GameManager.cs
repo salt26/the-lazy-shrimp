@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
             m_LevelTextShadow = GameObject.FindGameObjectWithTag("UILevelTextShadow").GetComponent<Text>();
 
             --level;
-            if(level + 1 < SceneManager.sceneCountInBuildSettings) { 
+            if(level + 2 < SceneManager.sceneCountInBuildSettings) { 
                 m_LevelText.text = (level / 4 + 1) + "-" + (level % 4 + 1) + " Stage";
                 m_LevelTextShadow.text = (level / 4 + 1) + "-" + (level % 4 + 1) + " Stage";
             }
